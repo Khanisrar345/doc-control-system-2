@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Sign In — Document Control System</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;font-family:'Inter',sans-serif;}
+body{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,#0d1b2a 0%,#1a3a4a 40%,#0d5f5f 100%);
+  position:relative;overflow:hidden;
+}
+/* animated background blobs */
+body::before,body::after{
+  content:'';position:absolute;border-radius:50%;opacity:.08;
+  animation:float 8s ease-in-out infinite;
+}
+body::before{width:600px;height:600px;background:#23a6a6;top:-200px;right:-200px;}
+body::after{width:400px;height:400px;background:#1a7a7a;bottom:-150px;left:-100px;animation-delay:3s;}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-20px);}}
+.card{
+  background:rgba(255,255,255,.97);border-radius:20px;
+  padding:44px 40px 36px;max-width:420px;width:90%;
+  box-shadow:0 32px 80px rgba(0,0,0,.4);
+  position:relative;z-index:10;
+  animation:slideUp .5s ease;
+}
+@keyframes slideUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:none;}}
+.brand{text-align:center;margin-bottom:30px;}
+.logo-ring{
+  width:64px;height:64px;border-radius:16px;
+  background:linear-gradient(135deg,#0d5f5f,#23a6a6);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 16px;box-shadow:0 8px 24px rgba(26,122,122,.4);
+}
+.logo-ring svg{width:32px;height:32px;fill:#fff;}
+h1{font-size:22px;font-weight:700;color:#1a2332;margin-bottom:4px;}
+.sub{font-size:12px;color:#9ca3af;letter-spacing:.3px;}
+.alert{
+  background:#fef2f2;border:1px solid #fecaca;color:#b91c1c;
+  border-radius:10px;padding:10px 14px;font-size:13px;margin-bottom:18px;
+  display:flex;align-items:center;gap:8px;
+}
+.alert svg{width:16px;height:16px;flex-shrink:0;}
+.field{margin-bottom:16px;}
+label{display:block;font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
+.input-wrap{position:relative;}
+.input-wrap svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:#9ca3af;}
+input[type=text],input[type=email],input[type=password]{
+  width:100%;padding:11px 14px 11px 40px;
+  border:1.5px solid #e5eaef;border-radius:10px;
+  font-size:14px;font-family:'Inter',sans-serif;
+  background:#f8fafc;color:#1a2332;outline:none;
+  transition:border-color .2s,box-shadow .2s;
+}
+input:focus{border-color:#1a7a7a;box-shadow:0 0 0 3px rgba(26,122,122,.12);background:#fff;}
+.show-pw{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#9ca3af;padding:2px;}
+.show-pw:hover{color:#1a7a7a;}
+.btn-login{
+  width:100%;padding:13px;border:none;border-radius:10px;
+  background:linear-gradient(135deg,#1a7a7a,#0d5f5f);
+  color:#fff;font-size:15px;font-weight:600;cursor:pointer;
+  transition:opacity .18s,transform .18s;letter-spacing:.3px;
+  margin-top:6px;
+}
+.btn-login:hover{opacity:.9;transform:translateY(-1px);}
+.btn-login:active{transform:translateY(0);}
+.divider{display:flex;align-items:center;gap:10px;margin:20px 0 0;color:#d1d5db;font-size:12px;}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:#f0f4f8;}
+.footer{text-align:center;margin-top:20px;font-size:11px;color:#c8b89a;}
+/* Mobile */
+@media(max-width:480px){.card{padding:32px 24px 28px;}}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="brand">
+    <div class="logo-ring">
+      <!-- Document icon -->
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 4h5v7h7v9H6V4z"/></svg>
+    </div>
+    <h1>Document Control System</h1>
+    <div class="sub">Enterprise Document Management</div>
+  </div>
+
+  <% if(error){ %>
+  <div class="alert">
+    <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+    <%= error %>
+  </div>
+  <% } %>
+
+  <form method="POST" action="/login" autocomplete="on">
+    <div class="field">
+      <label>Email or Username</label>
+      <div class="input-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <input type="text" name="identifier" placeholder="Enter your email or username" required autocomplete="username"/>
+      </div>
+    </div>
+    <div class="field">
+      <label>Password</label>
+      <div class="input-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        <input type="password" name="password" id="pw" placeholder="Enter your password" required autocomplete="current-password"/>
+        <button type="button" class="show-pw" onclick="togglePw()" title="Show/hide password">
+          <svg id="eyeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+      </div>
+    </div>
+    <button type="submit" class="btn-login">Sign In →</button>
+  </form>
+
+  <div class="divider">secure access</div>
+  <div class="footer">&copy; 2025 Document Control System</div>
+</div>
+
+<script>
+function togglePw(){
+  const pw=document.getElementById('pw');
+  pw.type=pw.type==='password'?'text':'password';
+}
+// Prevent form re-submission on back button
+if(window.history.replaceState) window.history.replaceState(null,null,window.location.href);
+</script>
+</body>
+</html>
